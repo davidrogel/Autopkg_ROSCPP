@@ -14,8 +14,9 @@ from __future__ import print_function
 import sys
 import os
 
-# TODO: 
 CATKIN_CREATE_PKG_CMD = 'catkin_create_pkg'
+ROS_WORKSPACE_ENV = 'ROS_WORKSPACE'
+HOME_ENV = 'HOME'
 
 def create_cpp_file(src_path, pkg_name):
     cpp_file = """
@@ -33,10 +34,10 @@ int main(int argc, char ** argv)
 
 def get_path_catkin_ws_src():
     try:
-        catkin_ws = os.environ['ROS_WORKSPACE']
+        catkin_ws = os.environ[ROS_WORKSPACE_ENV]
         return os.path.join(os.path.expanduser(catkin_ws), 'src')
     except:
-        src_path = os.path.join(os.environ['HOME'], 'catkin_ws/src')
+        src_path = os.path.join(os.environ[HOME_ENV], 'catkin_ws/src')
         if os.path.exists(src_path):
             return src_path
         else:
