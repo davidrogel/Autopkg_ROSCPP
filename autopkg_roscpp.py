@@ -14,6 +14,9 @@ from __future__ import print_function
 import sys
 import os
 
+PROG_NAME = 'autopkg_roscpp'
+PROG_DESC = 'Crea paquetes para ros en su version c++, genera un fichero c++ basico y descomenta las lineas principales de CMakeList.txt para poder compilar'
+
 CATKIN_CREATE_PKG_CMD = 'catkin_create_pkg'
 ROS_WORKSPACE_ENV = 'ROS_WORKSPACE'
 HOME_ENV = 'HOME'
@@ -85,11 +88,18 @@ def create_pkg(pkg_name, args):
     print('Ejecutando...', cmd)
     os.system(cmd)
 
+def arguments():
+    import argparse
+
+    parser = argparse.ArgumentParser(PROG_NAME, description=PROG_DESC)
+
+    parser.add_argument('pkg_name', type=str, help='Nombre del paquete')
+    parser.add_argument('arguments', type=str, nargs='+', help='Dependencias del paquete. Ej: roscpp')
+
+    return parser.parse_args()
+
 def main():
-    if len(sys.argv) == 1:
-        print('No se han proporcionado argumentos suficientes')
-        exit(1)
-    # TODO: Se debe comprobar si los argumentos contienen roscpp, o si al menos hay argumentos a parte del nombre del paquete, si no solo crearlo
+    argx = arguments()
 
     # change dir to $HOME/catkin_ws/src
     try:
@@ -98,8 +108,8 @@ def main():
     except Exception as e:
         print(e)
     # create package
-    pkg_name = sys.argv[1]
-    create_pkg(pkg_name, sys.argv[2:])
+    pkg_name = argx.pkg_name
+    create_pkg(pkg_name, argx.arguments)
 
     # create cpp file
     # TODO: Se debe mirar si existe la carpeta "src" en el paquete
