@@ -103,7 +103,7 @@ def arguments():
     parser = argparse.ArgumentParser(PROG_NAME, description=PROG_DESC)
 
     parser.add_argument('pkg_name', type=str, help='Nombre del paquete')
-    parser.add_argument('arguments', type=str, nargs='+', help='Dependencias del paquete. Ej: roscpp')
+    parser.add_argument('deps', type=str, nargs='+', help='Dependencias del paquete. Ej: roscpp')
 
     return parser.parse_args()
 
@@ -118,10 +118,10 @@ def main():
         print(e)
     # create package
     pkg_name = argx.pkg_name
-    create_pkg(pkg_name, argx.arguments)
+    create_pkg(pkg_name, argx.deps)
 
     # create cpp file
-    if 'roscpp' in argx.arguments:
+    if 'roscpp' in argx.deps:
         path_to_pkg_src = os.path.join(src_path, os.path.join(pkg_name, 'src'))
         if not os.path.exists(path_to_pkg_src):
             os.mkdir(path_to_pkg_src) # no deberia llegar aqui nunca
