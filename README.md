@@ -15,9 +15,11 @@ Autogenerador de paquetes que usan C++ en ROS. Por ahora tiene las siguientes ca
 
 Se puede ejecutar tanto dandole permisos de ejecución como con python2.
 
-Uso: `./autopkg_roscpp.py [pkg_name] [ros_arguments]`
+Uso:
+`./autopkg_roscpp.py [pkg_name] [ros_arguments]`
 
-Ejemplo: `./autopkg_roscpp.py pacote roscpp`
+Ejemplo: 
+`./autopkg_roscpp.py pacote roscpp`
 
 Después de ejecutar el script bastaría con compilar `cd ~/catkin_ws && catkin_make --only-pkg-with-deps pacote`
 
