@@ -1,12 +1,15 @@
 #!/usr/bin/env python2
 
 """
-Script que crea un paquete de ros de c++
-Descomenta las lineas necesarias para compilar
-    - add_executable
-    - add_dependencies
-    - target_link_libraries
-Crea la carpeta "src" si es necesario y crea el fichero .cpp correspondiente en ella
+@Author: David Rogel Pernas
+@License: GNU General Public License v2.0, see LICENSE file for more info
+@Description:
+    Script que crea un paquete de ros de c++
+    Descomenta las lineas necesarias para compilar
+        - add_executable
+        - add_dependencies
+        - target_link_libraries
+    Crea la carpeta "src" si es necesario y crea el fichero .cpp correspondiente en ella
 """
 
 from __future__ import print_function
