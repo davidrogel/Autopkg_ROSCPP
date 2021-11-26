@@ -21,6 +21,15 @@ CATKIN_CREATE_PKG_CMD = 'catkin_create_pkg'
 ROS_WORKSPACE_ENV = 'ROS_WORKSPACE'
 HOME_ENV = 'HOME'
 
+# TERM COLORS
+RED   = "\033[1;31m"
+BLUE  = "\033[1;34m"
+CYAN  = "\033[1;36m"
+GREEN = "\033[0;32m"
+RESET = "\033[0;0m"
+BOLD    = "\033[;1m"
+REVERSE = "\033[;7m"
+
 def create_cpp_file(src_path, pkg_name):
     cpp_file = """
 #include <ros/ros.h>
@@ -112,14 +121,20 @@ def main():
     create_pkg(pkg_name, argx.arguments)
 
     # create cpp file
-    # TODO: Se debe mirar si existe la carpeta "src" en el paquete
-    create_cpp_file(os.path.join(src_path, os.path.join(pkg_name, 'src')), pkg_name)
+    if 'roscpp' in argx.arguments:
+        path_to_pkg_src = os.path.join(src_path, os.path.join(pkg_name, 'src'))
+        if not os.path.exists(path_to_pkg_src):
+            os.mkdir(path_to_pkg_src) # no deberia llegar aqui nunca
+        create_cpp_file(path_to_pkg_src, pkg_name)
 
-    # uncomment cmakelist.txt
-    try:
-        uncomment_CMakeList(os.path.join(src_path, pkg_name))
-    except:
-        print('Error al modificar el CMakeList.txt')
-
+        # uncomment cmakelist.txt
+        try:
+            uncomment_CMakeList(os.path.join(src_path, pkg_name))
+        except:
+            print('Error al modificar el CMakeList.txt')
+    else:
+        sys.stdout.write(RED)
+        print('No se ha especificado roscpp como dependencia no se va a crear el archivo .cpp ni descomentar el CMakeList.txt')
+        sys.stdout.write(RESET)
 if __name__ == '__main__':
     main()
